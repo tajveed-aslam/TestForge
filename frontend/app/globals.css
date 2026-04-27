@@ -1,0 +1,66 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+body {
+  background-color: #030712;
+}
+
+@utility gradient-text {
+  background-image: linear-gradient(to right, #a78bfa, #e879f9, #f472b6);
+  background-clip: text;
+  color: transparent;
+}
+
+@utility glow-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glow-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 32px rgba(139, 92, 246, 0.15);
+}
+
+@utility btn-primary {
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: white;
+  transition: opacity 0.15s ease;
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+}
+
+.btn-primary:hover { opacity: 0.88; }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+@utility btn-ghost {
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #d1d5db;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: background-color 0.15s ease;
+}
+
+.btn-ghost:hover { background-color: rgba(255,255,255,0.05); }
+
+@utility input-base {
+  width: 100%;
+  border-radius: 0.75rem;
+  background-color: #111827;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #f3f4f6;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  outline: none;
+  transition: box-shadow 0.15s ease;
+}
+
+.input-base:focus { box-shadow: 0 0 0 2px rgba(139,92,246,0.5); }
+.input-base::placeholder { color: #4b5563; }
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #374151; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #6b7280; }

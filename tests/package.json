@@ -1,0 +1,17 @@
+{
+  "name": "testforge-tests",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "test:api": "playwright test specs/api",
+    "test:ui": "playwright test specs/ui",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^25.6.0",
+    "dotenv": "^17.4.2",
+    "typescript": "^5.6.0"
+  }
+}

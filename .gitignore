@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Env / secrets
+backend/.env
+frontend/.env.local
+frontend/.env*.local
+.env
+.env.*
+!.env.example
+
+# Next.js
+frontend/.next/
+frontend/out/
+frontend/node_modules/
+
+# Tests
+tests/node_modules/
+tests/playwright-report/
+tests/test-results/
+
+# OS
+.DS_Store
+Thumbs.db
