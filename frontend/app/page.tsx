@@ -30,14 +30,14 @@ const FEATURES = [
     desc: "Generated code and documents are instantly copyable or downloadable — ready to drop into your project.",
   },
   {
-    icon: "🔀",
-    title: "Side-by-Side Compare",
-    desc: "Generate the same test in Playwright vs Cypress vs Selenium simultaneously to compare approaches.",
+    icon: "📡",
+    title: "Live Streaming Output",
+    desc: "Code and documents stream in token-by-token over SSE, so output appears as it's generated instead of a blank screen and a spinner.",
   },
   {
     icon: "🤖",
-    title: "Powered by Claude",
-    desc: "Built on Anthropic's Claude — the same AI used by engineering teams at leading tech companies.",
+    title: "Powered by Gemini",
+    desc: "Built on Google's Gemini API, with a zero-cost mock mode for demos that need no API key at all.",
   },
 ];
 
@@ -63,7 +63,7 @@ export default function Home() {
         <div className="relative max-w-3xl">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-300 text-xs mb-8">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-            Powered by Claude AI · 10+ frameworks · 8 document types
+            Powered by Gemini · 10+ frameworks · 8 document types
           </div>
 
           <h1 className="text-5xl sm:text-6xl font-extrabold tracking-tight mb-5 leading-tight">

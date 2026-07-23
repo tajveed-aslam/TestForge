@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import StreamingResponse
-from pydantic import BaseModel
-from services.ai_service import stream_generation
+from pydantic import BaseModel, Field
+from services.ai_service import is_ready, stream_generation
 from services.prompt_builder import build_test_generation_prompt, FRAMEWORK_NOTES, TEST_TYPE_NOTES, PATTERN_NOTES
 
 router = APIRouter(prefix="/generate", tags=["generate"])
@@ -12,11 +12,11 @@ VALID_PATTERNS = set(PATTERN_NOTES.keys())
 
 
 class TestGenRequest(BaseModel):
-    description: str
+    description: str = Field(max_length=4000)
     framework: str
     test_type: str
     pattern: str
-    additional_context: str = ""
+    additional_context: str = Field(default="", max_length=4000)
 
 
 @router.post("/tests")
@@ -29,6 +29,10 @@ async def generate_tests(body: TestGenRequest):
         raise HTTPException(status_code=422, detail=f"Invalid test_type. Choose from: {sorted(VALID_TEST_TYPES)}")
     if body.pattern not in VALID_PATTERNS:
         raise HTTPException(status_code=422, detail=f"Invalid pattern. Choose from: {sorted(VALID_PATTERNS)}")
+
+    ready, reason = is_ready()
+    if not ready:
+        raise HTTPException(status_code=503, detail=reason)
 
     prompt = build_test_generation_prompt(
         description=body.description,

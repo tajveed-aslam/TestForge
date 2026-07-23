@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import StreamingResponse
-from pydantic import BaseModel
-from services.ai_service import stream_generation
+from pydantic import BaseModel, Field
+from services.ai_service import is_ready, stream_generation
 from services.prompt_builder import build_doc_generation_prompt, DOC_TYPE_PROMPTS
 
 router = APIRouter(prefix="/docs", tags=["docs"])
@@ -10,7 +10,7 @@ VALID_DOC_TYPES = set(DOC_TYPE_PROMPTS.keys())
 
 
 class DocGenRequest(BaseModel):
-    description: str
+    description: str = Field(max_length=4000)
     doc_type: str
 
 
@@ -20,6 +20,10 @@ async def generate_doc(body: DocGenRequest):
         raise HTTPException(status_code=422, detail="description is required")
     if body.doc_type not in VALID_DOC_TYPES:
         raise HTTPException(status_code=422, detail=f"Invalid doc_type. Choose from: {sorted(VALID_DOC_TYPES)}")
+
+    ready, reason = is_ready()
+    if not ready:
+        raise HTTPException(status_code=503, detail=reason)
 
     prompt = build_doc_generation_prompt(
         description=body.description,

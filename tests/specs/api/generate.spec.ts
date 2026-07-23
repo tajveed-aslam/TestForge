@@ -106,6 +106,10 @@ test.describe("POST /generate/tests", () => {
   });
 
   test("all 10 frameworks are accepted", async ({ request }) => {
+    // Each request waits for the full mock stream to finish (~8s/word-delay
+    // apiece) since request.post() collects the whole body — 10 sequential
+    // calls comfortably exceed the default per-test timeout.
+    test.setTimeout(240_000);
     const frameworks = [
       "playwright-typescript", "playwright-javascript",
       "cypress-typescript",    "cypress-javascript",
@@ -121,6 +125,7 @@ test.describe("POST /generate/tests", () => {
   });
 
   test("all test types are accepted", async ({ request }) => {
+    test.setTimeout(60_000);
     const testTypes = ["ui-e2e", "api", "unit", "mobile"];
     for (const test_type of testTypes) {
       const res = await request.post("/generate/tests", {

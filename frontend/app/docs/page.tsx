@@ -33,7 +33,7 @@ const DOC_GROUPS = [
 
 const EXAMPLES = [
   "AZMart — an e-commerce platform with user auth, product catalogue, cart, checkout, order tracking, admin dashboard, and multi-currency support. Tech: Next.js 14 + FastAPI + SQLite.",
-  "TestForge — AI-powered test code and SDLC document generator. Users describe a feature, choose a framework, and receive ready-to-run test files. Tech: Next.js + FastAPI + Claude API.",
+  "TestForge — AI-powered test code and SDLC document generator. Users describe a feature, choose a framework, and receive ready-to-run test files. Tech: Next.js + FastAPI + Gemini API.",
   "Mobile banking app with biometric login, fund transfers, bill payments, and transaction history. iOS + Android. REST API backend.",
 ];
 
@@ -153,7 +153,7 @@ export default function DocsPage() {
           <div className="space-y-5 lg:border-l lg:border-white/5 lg:pl-6">
             <div>
               <label className="block text-xs font-medium text-gray-400 mb-3">Document Type</label>
-              <div className="space-y-4">
+              <div className="space-y-4" role="group" aria-label="Document Type">
                 {DOC_GROUPS.map(({ group, types }) => (
                   <div key={group}>
                     <p className="text-[10px] text-gray-600 uppercase tracking-widest mb-1.5">{group}</p>

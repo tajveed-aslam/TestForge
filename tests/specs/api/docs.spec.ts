@@ -69,6 +69,10 @@ test.describe("POST /docs/generate", () => {
   });
 
   test("all 8 doc types are accepted", async ({ request }) => {
+    // Each request waits for the full mock stream to finish since
+    // request.post() collects the whole body — 8 sequential calls
+    // comfortably exceed the default per-test timeout.
+    test.setTimeout(240_000);
     const docTypes = [
       "test-strategy", "test-plan", "rtm",
       "user-stories", "sprint-planning",

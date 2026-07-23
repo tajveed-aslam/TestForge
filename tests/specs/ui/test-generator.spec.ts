@@ -53,11 +53,15 @@ test.describe("Test Generator page", () => {
 
   test("generate button becomes disabled while streaming", async ({ page }) => {
     await page.locator("textarea").first().fill("Login page with email and password fields");
-    const generateBtn = page.getByRole("button", { name: /Generate Test Code/i });
+    // Matches both the idle "Generate Test Code →" label and the streaming
+    // "Generating…" label — the button's accessible name changes the
+    // instant streaming starts, so a name tied to only the idle state
+    // would stop matching as soon as it's clicked.
+    const generateBtn = page.getByRole("button", { name: /Generate Test Code|Generating/i });
     await generateBtn.click();
     await expect(generateBtn).toBeDisabled();
     // Wait for generation to complete
-    await expect(generateBtn).toBeEnabled({ timeout: 15_000 });
+    await expect(generateBtn).toBeEnabled({ timeout: 25_000 });
   });
 
   test("code output block appears after generation", async ({ page }) => {

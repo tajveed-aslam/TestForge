@@ -120,7 +120,7 @@ This document defines the testing strategy for **TestForge**, an AI-powered web 
 - Mock mode (`MOCK_MODE=true`) — verifying it bypasses the real API
 
 ### Out-of-Scope
-- Claude AI model accuracy and hallucination testing (third-party responsibility)
+- Gemini AI model accuracy and hallucination testing (third-party responsibility)
 - Authentication / authorisation (not yet implemented)
 - Load testing at scale (portfolio project — single-user usage)
 - Browser compatibility beyond Chromium
@@ -179,8 +179,8 @@ This document defines the testing strategy for **TestForge**, an AI-powered web 
 
 | Risk | Impact | Mitigation |
 |---|---|---|
-| Claude API rate limiting | High | Mock mode for dev; retry logic for prod |
+| Gemini API rate limiting | High | Mock mode for dev; retry logic for prod |
 | SSE stream drops mid-response | Medium | Frontend accumulates partial chunks; shows what was received |
 | Generated code has syntax errors | Medium | User-visible — clearly in scope for manual spot-checking |
-| Streaming timeout on slow connections | Low | `max_tokens: 4096` cap keeps responses under 30s |
+| Streaming timeout on slow connections | Low | `max_output_tokens: 8192` cap keeps responses bounded |
 '''

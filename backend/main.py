@@ -9,9 +9,13 @@ from routers import generate, docs
 
 app = FastAPI(title="TestForge API", version="1.0.0")
 
+# Comma-separated list, e.g. "http://localhost:3000,https://testforge.vercel.app"
+_frontend_origins = os.getenv("FRONTEND_ORIGINS") or os.getenv("FRONTEND_URL", "http://localhost:3000")
+cors_origins = [o.strip() for o in _frontend_origins.split(",") if o.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[os.getenv("FRONTEND_URL", "http://localhost:3000")],
+    allow_origins=cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
