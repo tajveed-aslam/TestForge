@@ -1,3 +1,5 @@
+import json
+
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
@@ -31,8 +33,11 @@ async def generate_doc(body: DocGenRequest):
     )
 
     async def event_stream():
+        # JSON-encode each chunk so embedded newlines (common in real Gemini
+        # output) can't break SSE framing, which requires every line of a
+        # value to be individually prefixed with "data: ".
         async for chunk in stream_generation(prompt):
-            yield f"data: {chunk}\n\n"
+            yield f"data: {json.dumps(chunk)}\n\n"
         yield "data: [DONE]\n\n"
 
     return StreamingResponse(event_stream(), media_type="text/event-stream")

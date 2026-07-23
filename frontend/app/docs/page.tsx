@@ -74,9 +74,12 @@ export default function DocsPage() {
         buffer = lines.pop() ?? "";
         for (const line of lines) {
           if (line.startsWith("data: ")) {
-            const chunk = line.slice(6);
-            if (chunk === "[DONE]") { setIsStreaming(false); return; }
-            setContent((prev) => prev + chunk);
+            const raw = line.slice(6);
+            if (raw === "[DONE]") { setIsStreaming(false); return; }
+            // Chunks are JSON-encoded so embedded newlines survive SSE
+            // framing intact (a single chunk of real Gemini output often
+            // spans multiple lines).
+            setContent((prev) => prev + JSON.parse(raw));
           }
         }
       }
